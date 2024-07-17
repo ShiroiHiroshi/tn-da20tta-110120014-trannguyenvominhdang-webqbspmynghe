@@ -1,0 +1,30 @@
+﻿@model IEnumerable<WebsiteQuangBaMyNghe.Models.EF.ChiTietDonHang>
+@if (Model != null && Model.Any())
+{
+    int i = 0;
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Tên sản phẩm</th>
+                <th>Giá</th>
+                <th>Số lượng</th>
+                <th>Thành tiền</th>
+            </tr>
+
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@i</td>
+                    <td>@(item.SanPham.TenSanPham)</td>
+                    <td>@item.Gia</td>
+                    <td>@item.Soluong</td>
+                    <td>@WebsiteQuangBaMyNghe.Common.Common.FormatNumber((item.Gia * item.Soluong), 0)</td>
+                </tr>
+                i++;
+            }
+        </tbody>
+    </table>
+}

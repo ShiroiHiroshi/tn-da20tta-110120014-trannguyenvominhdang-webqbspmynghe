@@ -1,0 +1,43 @@
+﻿@model WebsiteQuangBaMyNghe.Models.EF.Admin
+@{
+    ViewBag.Title = "AdminLogin";
+}
+<link rel="stylesheet" type="text/css" href="~/Content/assets/styles/categories_styles.css">
+<link rel="stylesheet" type="text/css" href="~/Content/assets/styles/categories_responsive.css">
+<div class="container product_section_container">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="row">
+            <div class="col product_section clearfix">
+                <div class="card-body">
+                    <center>
+                        <img src="~/image/adminuser.png" width="150" />
+                        <h2>ĐĂNG NHẬP QUẢN TRỊ</h2>
+                        <hr />
+                    </center>
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        <label for="TenSanPham">Tài khoản</label>
+                        @Html.TextBoxFor(x => x.TaiKhoan_AD, new { @class = "form-control", @placeholder = "Tài khoản" })
+                        @Html.ValidationMessageFor(x => x.TaiKhoan_AD, null, new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        <label for="TenSanPham">Mật khẩu</label>
+                        @Html.PasswordFor(x => x.MatKhau_AD, new { @class = "form-control", @placeholder = "Mật khẩu" })
+                        @Html.ValidationMessageFor(x => x.MatKhau_AD, null, new { @class = "text-danger" })
+                    </div>
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">Đăng nhập</button>
+                </div>
+                <h3>@ViewBag.LoginFail</h3>
+            </div>
+        </div>
+    }
+</div>
+@section scripts
+{
+    <script src="~/Content/assets/js/categories_custom.js"></script>
+}

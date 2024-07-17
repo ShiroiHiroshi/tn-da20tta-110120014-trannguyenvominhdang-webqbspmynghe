@@ -1,0 +1,13 @@
+﻿@model IEnumerable<WebsiteQuangBaMyNghe.Models.EF.DiaPhuong>
+@if (Model != null && Model.Any())
+{
+    <ul class="checkboxes">
+        @foreach (var item in Model)
+        {
+            <li>
+                <input type="checkbox" class="filter-dia-phuong" value="@item.MaDiaPhuong" @(ViewBag.DiaPhuongId == item.MaDiaPhuong ? "checked" : "") />
+                <span>@item.TenDiaPhuong</span>
+            </li>
+        }
+    </ul>
+}

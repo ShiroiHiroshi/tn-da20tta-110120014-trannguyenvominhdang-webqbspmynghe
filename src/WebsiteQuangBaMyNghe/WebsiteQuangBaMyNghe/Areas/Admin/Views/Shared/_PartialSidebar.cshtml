@@ -1,0 +1,108 @@
+﻿<!-- Sidebar -->
+@{var admin = Session["admin"] as WebsiteQuangBaMyNghe.Models.EF.Admin; }
+<div class="sidebar">
+    <!-- Sidebar user (optional) -->
+    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+            <img src="~/image/adminuser.png" class="img-circle elevation-2" alt="User Image">
+        </div>
+        <div class="info">
+            <a href="#" class="d-block">@admin.TaiKhoan_AD</a>
+        </div>
+    </div>
+
+    <!-- SidebarSearch Form -->
+    <div class="form-inline">
+        <div class="input-group" data-widget="sidebar-search">
+            <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+            <div class="input-group-append">
+                <button class="btn btn-sidebar">
+                    <i class="fas fa-search fa-fw"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar Menu -->
+    <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <!-- Add icons to the links using the .nav-icon class
+    with font-awesome or any other icon font library -->
+            <li class="nav-item">
+                <a href="/Admin/DanhMuc" class="nav-link">
+                    <i class="nav-icon fa fa-th-list"></i>
+                    <p>
+                        Quản lý danh mục
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/admin/khachhang" class="nav-link">
+                    <i class="nav-icon fa fa-users"></i>
+                    <p>
+                        Quản lý khách hàng
+                        @*<span class="right badge badge-danger">New</span>*@
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/Admin/SanPham" class="nav-link">
+                    <i class="nav-icon fa fa-cubes"></i>
+                    <p>
+                        Quản lý sản phẩm
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/Admin/DonHang" class="nav-link">
+                    <i class="nav-icon fa fa-shopping-cart"></i>
+                    <p>
+                        Quản lý đơn hàng
+                    </p>
+                </a>
+            </li>
+            @*<li class="nav-item">
+            <a href="/Admin/SanPham" class="nav-link">
+                <i class="nav-icon fas fa-copy"></i>
+                <p>
+                    Quản lý sản phẩm
+                    <i class="fas fa-angle-left right"></i>
+                    <span class="badge badge-info right">6</span>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a href="../layout/top-nav.html" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Danh muc</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/Admin/SanPham" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Sản phẩm</p>
+                    </a>
+                </li>
+            </ul>
+        </li>*@
+            <li class="nav-item">
+                <a href="/Admin/DiaPhuong" class="nav-link">
+                    <i class="nav-icon fa fa-map-marker"></i>
+                    <p>
+                        Quản lý địa phương
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="nav-icon fa fa-line-chart"></i>
+                    <p>
+                        Quản lý thống kê
+                    </p>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <!-- /.sidebar-menu -->
+</div>
+<!-- /.sidebar -->

@@ -1,0 +1,54 @@
+﻿@model WebsiteQuangBaMyNghe.Models.EF.BinhLuan
+<div class="add_review">
+    <form id="review_form" method="post" action="@Url.Action("PostBinhLuan", "BinhLuan")">
+        <script>
+            $(document).ready(function () {
+                $("#review_form").submit(function (event) {
+                    event.preventDefault(); // Ngăn chặn form gửi đi mặc định
+
+                    $.ajax({
+                        url: $(this).attr("action"),
+                        type: $(this).attr("method"),
+                        data: $(this).serialize(),
+                        success: function (response) {
+                            if (response.Success) {
+                                $("#review_form")[0].reset(); // Reset form
+                            } else {
+                                alert("Failed to submit review. Please try again.");
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            alert("An error occurred: " + error);
+                        }
+                    });
+                });
+            });
+        </script>
+        @Html.AntiForgeryToken()
+        <div>
+            <h1>Add Review</h1>
+            @*@Html.TextBoxFor(x => x.KhachHang.Hoten, new { @class = "form_input form_input_name", @placeholder = "name", @id = "review_name" })
+                @Html.TextBoxFor(x => x.KhachHang.Email, new { @class = "form_input form_input_email", @placeholder = "email", @id = "review_email" })*@
+            @Html.HiddenFor(x => x.MaSanPham, new { @value = ViewBag.MaSanPham })
+            <input type="text" id="txtDanhGia" name="DanhGia" value="4" style="visibility:hidden;" />
+            @*<input id="review_name" class="form_input input_name"  style="visibility:hidden;" type="text" name="name" placeholder="Name*" required="required" data-error="Name is required.">
+                <input id="review_email" class="form_input input_email" type="email" name="email" placeholder="Email*" required="required" data-error="Valid email is required.">*@
+        </div>
+        <div>
+            <h1>Your Rating:</h1>
+            <ul class="user_star_rating">
+                <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
+            </ul>
+            @Html.TextAreaFor(x => x.NoiDungBL, new { @class = "input_review", @rows = "4", @placeholder = "Your review" })
+            @*<textarea id="review_message" class="input_review" name="message" placeholder="Your Review" rows="4" required data-error="Please, leave us a review."></textarea>*@
+        </div>
+        <div class="text-left text-sm-right">
+            <button id="review_submit" type="submit" class="red_button review_submit_btn trans_300" value="Submit">submit</button>
+        </div>
+    </form>
+</div>
+

@@ -1,0 +1,68 @@
+﻿@model WebsiteQuangBaMyNghe.Models.EF.KhachHang
+@{
+    ViewBag.Title = "UserRegister";
+}
+<link rel="stylesheet" type="text/css" href="~/Content/assets/styles/categories_styles.css">
+<link rel="stylesheet" type="text/css" href="~/Content/assets/styles/categories_responsive.css">
+<div class="container product_section_container">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Đăng ký tài khoản</h3>
+        </div>
+        <div class="card-body">
+            <div class="bs-stepper-content">
+                @using (Html.BeginForm("UserRegister", "Home", FormMethod.Post, new { }))
+                {
+                    @Html.AntiForgeryToken();
+                    @Html.ValidationSummary(true)
+                    <!-- your steps content here -->
+                    <div id="logins-part" class="content active dstepper-block" role="tabpanel" aria-labelledby="logins-part-trigger">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Tài khoản</label>
+                            @Html.TextBoxFor(x => x.TaiKhoan_KH, new { @class = "form-control", @placehoder = "Tài khoản" })
+                            @Html.ValidationMessageFor(x => x.TaiKhoan_KH, null, new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Mật khẩu</label>
+                            @Html.PasswordFor(x => x.MatKhau_KH, new { @class = "form-control", @placehoder = "Mật khẩu" })
+                            @Html.ValidationMessageFor(x => x.MatKhau_KH, null, new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Họ tên</label>
+                            @Html.TextBoxFor(x => x.Hoten, new { @class = "form-control", @placehoder = "Họ tên" })
+                            @Html.ValidationMessageFor(x => x.Hoten, null, new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Email</label>
+                            @Html.TextBoxFor(x => x.Email, new { @class = "form-control", @placehoder = "Email" })
+                            @Html.ValidationMessageFor(x => x.Email, null, new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Địa chỉ</label>
+                            @Html.TextBoxFor(x => x.DiaChi, new { @class = "form-control", @placehoder = "Địa chỉ" })
+                            @Html.ValidationMessageFor(x => x.DiaChi, null, new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Số điện thoại</label>
+                            @Html.TextBoxFor(x => x.SoDienThoai, new { @class = "form-control", @placehoder = "Số điện thoại" })
+                            @Html.ValidationMessageFor(x => x.SoDienThoai, null, new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Đăng ký</button>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+
+        </div>
+        <!-- /.card-footer-->
+    </div>
+</div>
+@section scripts
+{
+    <script src="~/Content/assets/js/categories_custom.js"></script>
+}
