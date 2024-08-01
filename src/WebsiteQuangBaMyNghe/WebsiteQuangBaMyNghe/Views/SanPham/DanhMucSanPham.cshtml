@@ -18,6 +18,12 @@
                     <li class="active">
                         <a href="/"><i class="fa fa-angle-right" aria-hidden="true"></i>@ViewBag.CateName</a>
                     </li>
+                    @if (!string.IsNullOrEmpty(ViewBag.SelectedDiaPhuong))
+                    {
+                        <li class="active">
+                            <a href="/"><i class="fa fa-angle-right" aria-hidden="true"></i>@ViewBag.SelectedDiaPhuong</a>
+                        </li>
+                    }
                 </ul>
             </div>
 
@@ -30,13 +36,32 @@
                     </div>
                     @Html.Action("MenuLeft", "Menu", new { id = ViewBag.CateId })
                 </div>
+                <div class="sidebar_section">
+                    <div class="sidebar_title">
+                        <h5>Danh mục địa phương</h5>
+                    </div>
+                    <ul class="sidebar_categories">
+                        @foreach (var diaPhuong in ViewBag.DiaPhuongList as List<string>)
+                        {
+                            if (diaPhuong == ViewBag.SelectedDiaPhuong)
+                            {
+                                <li class="active"><a href="@Url.Action("DanhMucSanPham", "SanPham", new { alias = ViewBag.CateName, id = ViewBag.CateId, diaPhuong = diaPhuong })">@diaPhuong</a></li>
+                            }
+                            else
+                            {
+                                <li><a href="@Url.Action("DanhMucSanPham", "SanPham", new { alias = ViewBag.CateName, id = ViewBag.CateId, diaPhuong = diaPhuong })">@diaPhuong</a></li>
+                            }
+                        }
+                    </ul>
+                </div>
+
 
                 @*<div class="sidebar_section">
-                    <div class="sidebar_title">
-                        <h5>Danh mục dia phuong</h5>
-                    </div>
-                    @Html.Action("MenuDiaPhuong", "Menu", new { id = ViewBag.DiaPhuongId })
-                </div>*@
+        <div class="sidebar_title">
+            <h5>Danh mục dia phuong</h5>
+        </div>
+        @Html.Action("MenuDiaPhuong", "Menu", new { id = ViewBag.DiaPhuongId })
+            </div>*@
 
                 <!-- Price Range Filtering -->
                 <div class="sidebar_section">

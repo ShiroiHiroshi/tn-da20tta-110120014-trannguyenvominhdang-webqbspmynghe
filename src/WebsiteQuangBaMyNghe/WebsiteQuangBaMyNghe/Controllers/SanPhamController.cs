@@ -14,6 +14,8 @@ namespace WebsiteQuangBaMyNghe.Controllers
         public ActionResult Index()
         {
             var items = db.SanPhams.ToList();
+            var diaPhuongList = db.DiaPhuongs.Select(dp => dp.TenDiaPhuong).ToList(); // Lấy danh sách tên địa phương từ cơ sở dữ liệu
+            ViewBag.DiaPhuongList = diaPhuongList;
             return View(items);
         }
         public ActionResult Detail(string alias, int id)
@@ -23,20 +25,49 @@ namespace WebsiteQuangBaMyNghe.Controllers
             ViewBag.CountBL = countBL;
             return View(item);
         }
-        public ActionResult DanhMucSanPham(string alias, int? id)
+        //public ActionResult DanhMucSanPham(string alias, int? id)
+        //{
+        //    var items = db.SanPhams.ToList();
+        //    var diaPhuongList = db.DiaPhuongs.Select(dp => dp.TenDiaPhuong).ToList(); // Lấy danh sách tên địa phương từ cơ sở dữ liệu
+        //    ViewBag.DiaPhuongList = diaPhuongList;
+        //    if (id > 0)
+        //    {
+        //        items = items.Where(x => x.MaDanhMuc == id).ToList();
+        //    }
+        //    var cate = db.DanhMucs.Find(id);
+        //    if (cate != null)
+        //    {
+        //        ViewBag.CateName = cate.TenDanhMuc;
+        //    }
+        //    ViewBag.CateId = id;
+        //    return View(items);
+        //}
+        public ActionResult DanhMucSanPham(string alias, int? id, string diaPhuong)
         {
-            var items = db.SanPhams.ToList();
+            var items = db.SanPhams.AsQueryable();
+
             if (id > 0)
             {
-                items = items.Where(x => x.MaDanhMuc == id).ToList();
+                items = items.Where(x => x.MaDanhMuc == id);
             }
-            var cate= db.DanhMucs.Find(id);
-            if(cate != null)
+
+            if (!string.IsNullOrEmpty(diaPhuong))
+            {
+                items = items.Where(sp => sp.DiaPhuong.TenDiaPhuong == diaPhuong);
+            }
+
+            var diaPhuongList = db.DiaPhuongs.Select(dp => dp.TenDiaPhuong).ToList();
+            ViewBag.DiaPhuongList = diaPhuongList;
+
+            var cate = db.DanhMucs.Find(id);
+            if (cate != null)
             {
                 ViewBag.CateName = cate.TenDanhMuc;
             }
             ViewBag.CateId = id;
-            return View(items);
+            ViewBag.SelectedDiaPhuong = diaPhuong;
+
+            return View(items.ToList());
         }
         public ActionResult Partial_FilterDanhMuc()
         {
@@ -48,6 +79,14 @@ namespace WebsiteQuangBaMyNghe.Controllers
             var items = db.SanPhams.Where(x => x.IsSale).Take(12).ToList();
             return PartialView(items);
         }
+        public ActionResult FilterByDiaPhuong(string diaPhuong)
+        {
+            var items = db.SanPhams.Where(sp => sp.DiaPhuong.TenDiaPhuong == diaPhuong).ToList();
+            ViewBag.SelectedDiaPhuong = diaPhuong;
+            var diaPhuongList = db.DiaPhuongs.Select(dp => dp.TenDiaPhuong).ToList();
+            ViewBag.DiaPhuongList = diaPhuongList;
+            return View("Index", items);
+        }
         //public ActionResult FilterProductsByDiaPhuong(string diaPhuongs)
         //{
         //    var diaPhuongIds = diaPhuongs.Split(',').ToList();
@@ -55,5 +94,32 @@ namespace WebsiteQuangBaMyNghe.Controllers
 
         //    return PartialView("_ProductGrid", products);
         //}
+        public ActionResult FilterByDanhMucAndDiaPhuong(int? id, string diaPhuong)
+        {
+            var items = db.SanPhams.AsQueryable();
+
+            if (id > 0)
+            {
+                items = items.Where(x => x.MaDanhMuc == id);
+            }
+
+            if (!string.IsNullOrEmpty(diaPhuong))
+            {
+                items = items.Where(sp => sp.DiaPhuong.TenDiaPhuong == diaPhuong);
+            }
+
+            var diaPhuongList = db.DiaPhuongs.Select(dp => dp.TenDiaPhuong).ToList();
+            ViewBag.DiaPhuongList = diaPhuongList;
+            ViewBag.SelectedDiaPhuong = diaPhuong;
+
+            var cate = db.DanhMucs.Find(id);
+            if (cate != null)
+            {
+                ViewBag.CateName = cate.TenDanhMuc;
+            }
+            ViewBag.CateId = id;
+
+            return View("DanhMucSanPham", items.ToList());
+        }
     }
 }

@@ -28,7 +28,9 @@ namespace WebsiteQuangBaMyNghe.Models.EF
         public string ThongTinSanPham { get; set; }
         public string Image { get; set; }
         [Required(ErrorMessage = "Gia san pham khong duoc de trong")]
+        [Range(0.01, double.MaxValue, ErrorMessage = "Giá sản phẩm phải lớn hơn 0")]
         public decimal Gia { get; set; }
+        [CustomValidation(typeof(SanPham), nameof(ValidateGiaKhuyenMai))]
         public decimal? GiaKhuyenMai { get; set; }
         public int SoLuong { get; set; }
         public string Alias { get; set; }
@@ -43,5 +45,18 @@ namespace WebsiteQuangBaMyNghe.Models.EF
         public virtual ICollection<AnhSanPham> AnhSanPhams { get; set; }
         public virtual ICollection<ChiTietDonHang> ChiTietDonHangs { get; set; }
         public virtual ICollection<BinhLuan> BinhLuans { get; set; }
+        public static ValidationResult ValidateGiaKhuyenMai(decimal? giaKhuyenMai, ValidationContext context)
+        {
+            var instance = context.ObjectInstance as SanPham;
+            if (giaKhuyenMai.HasValue && giaKhuyenMai <= 0)
+            {
+                return new ValidationResult("Giá khuyến mãi phải lớn hơn 0");
+            }
+            if (instance != null && giaKhuyenMai >= instance.Gia)
+            {
+                return new ValidationResult("Giá khuyến mãi phải nhỏ hơn giá sản phẩm");
+            }
+            return ValidationResult.Success;
+        }
     }
 }

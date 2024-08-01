@@ -61,6 +61,12 @@ namespace WebsiteQuangBaMyNghe
                 namespaces: new[] { "WebsiteQuangBaMyNghe.Controllers" }
             );
             routes.MapRoute(
+                name: "FilterByDanhMucAndDiaPhuong",
+                url: "danh-muc-san-pham/{Alias}-{id}/{diaPhuong}",
+                defaults: new { controller = "SanPham", action = "FilterByDanhMucAndDiaPhuong", id = UrlParameter.Optional, diaPhuong = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
                 name: "GioHang",
                 url: "gio-hang",
                 defaults: new { controller = "GioHang", action = "Index", alias = UrlParameter.Optional },

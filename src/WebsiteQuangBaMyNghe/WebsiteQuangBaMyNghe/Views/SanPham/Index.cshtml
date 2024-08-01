@@ -14,10 +14,18 @@
 
             <div class="breadcrumbs d-flex flex-row align-items-center">
                 <ul>
-                    <li><a href="/">Trang chủ</a></li>
+                    <li>
+                        <a href="/">Trang chủ</a>
+                    </li>
                     <li class="active">
                         <a href="/"><i class="fa fa-angle-right" aria-hidden="true"></i>@ViewBag.CateName</a>
                     </li>
+                    @if (!string.IsNullOrEmpty(ViewBag.SelectedDiaPhuong))
+                    {
+                        <li class="active">
+                            <a href="/"><i class="fa fa-angle-right" aria-hidden="true"></i>@ViewBag.SelectedDiaPhuong</a>
+                        </li>
+                    }
                 </ul>
             </div>
 
@@ -32,11 +40,34 @@
                 </div>
 
                 @*<div class="sidebar_section">
+                        <div class="sidebar_title">
+                            <h5>Danh mục sản phẩm</h5>
+                        </div>
+                        @Html.Action("MenuDiaPhuong", "Menu")
+                    </div>*@
+
+                <div class="sidebar_section">
                     <div class="sidebar_title">
-                        <h5>Danh mục sản phẩm</h5>
+                        <h5>Danh mục địa phương</h5>
                     </div>
-                    @Html.Action("MenuDiaPhuong", "Menu")
-                </div>*@
+                    <ul class="sidebar_categories">
+                        @foreach (var diaPhuong in ViewBag.DiaPhuongList as List<string>)
+                        {
+                            if (diaPhuong == ViewBag.SelectedDiaPhuong)
+                            {
+                                <li class="active">
+                                    <a href="@Url.Action("FilterByDiaPhuong", "SanPham", new { diaPhuong = diaPhuong })">@diaPhuong</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li>
+                                    <a href="@Url.Action("FilterByDiaPhuong", "SanPham", new { diaPhuong = diaPhuong })">@diaPhuong</a>
+                                </li>
+                            }
+                        }
+                    </ul>
+                </div>
 
                 <!-- Price Range Filtering -->
                 <div class="sidebar_section">
@@ -47,7 +78,9 @@
                         <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
                     </p>
                     <div id="slider-range"></div>
-                    <div class="filter_button"><span>filter</span></div>
+                    <div class="filter_button">
+                        <span>filter</span>
+                    </div>
                 </div>
 
                 <!-- Sizes -->
@@ -107,9 +140,15 @@
                                         <span class="type_sorting_text">--Lọc thông tin--</span>
                                         <i class="fa fa-angle-down"></i>
                                         <ul class="sorting_type">
-                                            <li class="type_sorting_btn" data-isotope-option='{ "sortBy": "original-order" }'><span>Mặc định</span></li>
-                                            <li class="type_sorting_btn" data-isotope-option='{ "sortBy": "price" }'><span>Giá</span></li>
-                                            <li class="type_sorting_btn" data-isotope-option='{ "sortBy": "name" }'><span>Tên sản phẩm</span></li>
+                                            <li class="type_sorting_btn" data-isotope-option='{ "sortBy": "original-order" }'>
+                                                <span>Mặc định</span>
+                                            </li>
+                                            <li class="type_sorting_btn" data-isotope-option='{ "sortBy": "price" }'>
+                                                <span>Giá</span>
+                                            </li>
+                                            <li class="type_sorting_btn" data-isotope-option='{ "sortBy": "name" }'>
+                                                <span>Tên sản phẩm</span>
+                                            </li>
                                         </ul>
                                     </li>
                                     <li>
@@ -117,9 +156,15 @@
                                         <span class="num_sorting_text">6</span>
                                         <i class="fa fa-angle-down"></i>
                                         <ul class="sorting_num">
-                                            <li class="num_sorting_btn"><span>6</span></li>
-                                            <li class="num_sorting_btn"><span>12</span></li>
-                                            <li class="num_sorting_btn"><span>24</span></li>
+                                            <li class="num_sorting_btn">
+                                                <span>6</span>
+                                            </li>
+                                            <li class="num_sorting_btn">
+                                                <span>12</span>
+                                            </li>
+                                            <li class="num_sorting_btn">
+                                                <span>24</span>
+                                            </li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -127,13 +172,23 @@
                                     <div class="page_current">
                                         <span>1</span>
                                         <ul class="page_selection">
-                                            <li><a href="#">1</a></li>
-                                            <li><a href="#">2</a></li>
-                                            <li><a href="#">3</a></li>
+                                            <li>
+                                                <a href="#">1</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">2</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">3</a>
+                                            </li>
                                         </ul>
                                     </div>
-                                    <div class="page_total"><span>of</span> 3</div>
-                                    <div id="next_page" class="page_next"><a href="#"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a></div>
+                                    <div class="page_total">
+                                        <span>of</span> 3
+                                    </div>
+                                    <div id="next_page" class="page_next">
+                                        <a href="#"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
+                                    </div>
                                 </div>
 
                             </div>
@@ -161,14 +216,21 @@
                                                 <div class="favorite favorite_left"></div>
                                                 @if (item.GiaKhuyenMai > 0)
                                                 {
-                                                    <div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>Sale</span></div>
+                                                    <div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center">
+                                                        <span>Sale</span>
+                                                    </div>
                                                 }
 
                                                 <div class="product_info">
-                                                    <h6 class="product_name"><a href="/chi-tiet/@item.Alias-p@(item.MaSanPham)">@item.TenSanPham</a></h6>
+                                                    <h6 class="product_name">
+                                                        <a href="/chi-tiet/@item.Alias-p@(item.MaSanPham)">@item.TenSanPham</a>
+                                                    </h6>
                                                     @if (item.GiaKhuyenMai > 0)
                                                     {
-                                                        <div class="product_price">@Common.FormatNumber(item.GiaKhuyenMai, 0)<span>@Common.FormatNumber(item.Gia, 0)</span></div>
+                                                        <div class="product_price">
+                                                            @Common.FormatNumber(item.GiaKhuyenMai, 0)
+                                                            <span>@Common.FormatNumber(item.Gia, 0)</span>
+                                                        </div>
                                                     }
                                                     else
                                                     {
@@ -176,7 +238,9 @@
                                                     }
                                                 </div>
                                             </div>
-                                            <div class="red_button add_to_cart_button"><a href="#" class="btnAddToCart" data-id="@item.MaSanPham">Thêm vào giỏ hàng</a></div>
+                                            <div class="red_button add_to_cart_button">
+                                                <a href="#" class="btnAddToCart" data-id="@item.MaSanPham">Thêm vào giỏ hàng</a>
+                                            </div>
                                         </div>
                                     }
                                 }
@@ -196,10 +260,18 @@
                                         <span class="num_sorting_text">04</span>
                                         <i class="fa fa-angle-down"></i>
                                         <ul class="sorting_num">
-                                            <li class="num_sorting_btn"><span>01</span></li>
-                                            <li class="num_sorting_btn"><span>02</span></li>
-                                            <li class="num_sorting_btn"><span>03</span></li>
-                                            <li class="num_sorting_btn"><span>04</span></li>
+                                            <li class="num_sorting_btn">
+                                                <span>01</span>
+                                            </li>
+                                            <li class="num_sorting_btn">
+                                                <span>02</span>
+                                            </li>
+                                            <li class="num_sorting_btn">
+                                                <span>03</span>
+                                            </li>
+                                            <li class="num_sorting_btn">
+                                                <span>04</span>
+                                            </li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -230,22 +302,22 @@
 {
     <script src="~/Content/assets/js/categories_custom.js"></script>
     @*<script>
-        $(document).ready(function() {
-            $('.filter-dia-phuong').on('change', function() {
-                var selectedDiaPhuongs = [];
-                $('.filter-dia-phuong:checked').each(function() {
-                    selectedDiaPhuongs.push($(this).val());
-                });
+            $(document).ready(function() {
+                $('.filter-dia-phuong').on('change', function() {
+                    var selectedDiaPhuongs = [];
+                    $('.filter-dia-phuong:checked').each(function() {
+                        selectedDiaPhuongs.push($(this).val());
+                    });
 
-                $.ajax({
-                    url: '@Url.Action("FilterProductsByDiaPhuong", "SanPham")',
-                    type: 'GET',
-                    data: { diaPhuongs: selectedDiaPhuongs.join(',') },
-                    success: function(data) {
-                        $(".product-grid").html(data);
-                    }
+                    $.ajax({
+                        url: '@Url.Action("FilterProductsByDiaPhuong", "SanPham")',
+                        type: 'GET',
+                        data: { diaPhuongs: selectedDiaPhuongs.join(',') },
+                        success: function(data) {
+                            $(".product-grid").html(data);
+                        }
+                    });
                 });
             });
-        });
-    </script>*@
+        </script>*@
 }

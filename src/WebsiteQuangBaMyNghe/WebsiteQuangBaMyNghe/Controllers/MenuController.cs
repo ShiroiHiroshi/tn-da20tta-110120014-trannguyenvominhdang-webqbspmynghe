@@ -34,12 +34,8 @@ namespace WebsiteQuangBaMyNghe.Controllers
             var items = db.DanhMucs.ToList();
             return PartialView("_MenuLeft", items);
         }
-        public ActionResult MenuDiaPhuong(int? id)
+        public ActionResult MenuDiaPhuong()
         {
-            if (id != null)
-            {
-                ViewBag.DiaPhuongId = id;
-            }
             var items = db.DiaPhuongs.ToList();
             return PartialView("_MenuDiaPhuong", items);
         }
